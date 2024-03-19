@@ -5,7 +5,9 @@
 ** Chocolatine
 */
 
-int main(int argc, char **argv, char **env)
+#include <criterion/criterion.h>
+
+Test(default, example)
 {
-    return 0;
+    cr_assert_eq(1, 1);
 }
