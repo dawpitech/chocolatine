@@ -14,7 +14,7 @@ env:
 
 jobs:
   check_coding_style:
-    if: github.repositoryUrl != env.MIRROR_URL
+    if: github.repositoryUrl != vars.MIRROR_URL
     runs-on: ubuntu-latest
     container: ghcr.io/epitech/coding-style-checker:latest
     
@@ -48,7 +48,8 @@ jobs:
       - name: Verify make clean
         run: |
           make clean
-          for executable in ${{ env.EXECUTABLES }//,/ };
+          export EXECUTABLES=${{ env.EXECUTABLES }}
+          for executable in ${EXECUTABLES//,/ };
           do
             if ! [ -x "$executable" ]; then
               echo "Binary $executable is not executable"
