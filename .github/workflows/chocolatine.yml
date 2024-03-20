@@ -24,7 +24,7 @@ jobs:
         run: |
           export MIRROR_HTTPS_URL=$(echo ${{ env.MIRROR_URL }} | sed -e 's/:/\//' -e 's/git@/https:\/\//')
           echo $MIRROR_HTTPS_URL
-          if [ "$MIRROR_HTTPS_URL" == "${{ env.MIRROR_URL }}" ]; then
+          if [ "$MIRROR_HTTPS_URL" == $(eval git remote get-url origin) ]; then
             exit 1
           fi
 
