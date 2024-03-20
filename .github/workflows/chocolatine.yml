@@ -22,6 +22,7 @@ jobs:
       
       - name: Verify repository isn't the mirror
         run: |
+          echo $(git remote get-url origin)
           if [ "$(git remote get-url origin)" == "${{ env.MIRROR_URL }}" ]; then
             exit 1
           fi
