@@ -9,12 +9,12 @@ on:
       - 'ga-ignore-'
 
 env:
-  MIRROR_URL: "git://github.com/EpitechPromo2028/B-DOP-200-BDX-2-1-chocolatine-antoine.candelon.git"
+  MIRROR_URL: "git@github.com:EpitechPromo2028/B-DOP-200-BDX-2-1-chocolatine-antoine.candelon.git"
   EXECUTABLES: "exec,executor"
 
 jobs:
   check_coding_style:
-    if: github.repositoryUrl != vars.MIRROR_URL
+    if: github.repositoryUrl != ${{ env.MIRROR_URL }}
     runs-on: ubuntu-latest
     container: ghcr.io/epitech/coding-style-checker:latest
     
@@ -30,7 +30,6 @@ jobs:
           fi
           awk -F':' '{sub(/^ /, "", $3); print "::error file="$1",line="$2",title="$3" coding style error::"$4}' coding-style-reports.log
           exit 1
-        
     
   check_program_compilation:
     runs-on: ubuntu-latest
