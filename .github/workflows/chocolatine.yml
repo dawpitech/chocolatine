@@ -23,9 +23,8 @@ jobs:
       - name: Verify repository isn't the mirror
         run: |
           export MIRROR_HTTPS_URL=$(echo ${{ env.MIRROR_URL }} | sed -e 's/:/\//' -e 's/git@/https:\/\//' -e 's/\.git$//')
-          echo $MIRROR_HTTPS_URL
-          echo $(eval git remote get-url origin)
           if [ "$MIRROR_HTTPS_URL" == $(eval git remote get-url origin) ]; then
+            echo "::error title=Repository is the mirror::"
             exit 1
           fi
 
