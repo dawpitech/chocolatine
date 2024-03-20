@@ -13,10 +13,23 @@ env:
   EXECUTABLES: "exec,executor"
 
 jobs:
+  validate_repository:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Verify repository isn't the mirror
+        run: |
+          if [ "$(git remote get-url origin)" == "${{ env.MIRROR_URL }}" ]; then
+            exit 1
+          fi
+
   check_coding_style:
-    if: github.repository != vars.MIRROR_URL
     runs-on: ubuntu-latest
     container: ghcr.io/epitech/coding-style-checker:latest
+    needs: [ validate_repository ]
     
     steps:
       - name: Checkout repository
